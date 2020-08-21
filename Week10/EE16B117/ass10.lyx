@@ -1,0 +1,1481 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.2ex"
+width "100col%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+
+\noun on
+EE2703 - Applied Programming Lab
+\end_layout
+
+\begin_layout Title
+
+\noun on
+Assignment 10 - Windowed Fourier Spectra
+\end_layout
+
+\begin_layout Author
+Mohammed Khandwawala EE16B117
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.5ex"
+width "100col%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.2ex"
+width "100col%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+INTRODUCTION
+\end_layout
+
+\begin_layout Paragraph*
+This assignment is about analysing frequency spectra on non periodic signals.
+\end_layout
+
+\begin_layout Paragraph*
+DFT of a function is given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+X\left[k\right]=\stackrel[{\scriptstyle n=0}]{{\scriptstyle N-1}}{\sum}x[n]e^{\frac{2\pi jkn}{N}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+In this assignment we will try of obtain DFT on non periodic function.
+ Last assignment DFT of periodic function was evaluated.
+ To obtain DFT of non periodic functions , we will take a part of the function
+ and make it periodic.
+ And then evaluate its DFT but since it non periodic and if its repeated
+ on a specific interval then at those points function will become discontinuous.T
+o solve this We will multiply our input function with windowing function
+ to make it continous.
+ In this assignment Hamming Windowing Function is used.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+w\left[n\right]=\begin{cases}
+0 & |n|>\frac{N-1}{2}\\
+0.54+0.46cos(\frac{2\pi n}{N-1}) & |n|\leq\frac{N-1}{2}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Problem 1
+\end_layout
+
+\begin_layout Paragraph*
+The given function is sin(
+\begin_inset Formula $\sqrt{2}t$
+\end_inset
+
+) and it can be easily seen that it is non periodic in discrete time domain.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+t = linspace(-4*pi,4*pi,257)
+\end_layout
+
+\begin_layout Plain Layout
+
+t = t[:-1]
+\end_layout
+
+\begin_layout Plain Layout
+
+dt = t[1]-t[0] 
+\end_layout
+
+\begin_layout Plain Layout
+
+fmax=1/dt	
+\end_layout
+
+\begin_layout Plain Layout
+
+n = arange(256)
+\end_layout
+
+\begin_layout Plain Layout
+
+wnd = fftshift(0.54+0.46*cos(2*pi*n/256))
+\end_layout
+
+\begin_layout Plain Layout
+
+y = sin(sqrt(2)*t) 
+\end_layout
+
+\begin_layout Plain Layout
+
+y=sin(1.25*t) 
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(t,wnd) 
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(t,y)
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(t,y*wnd)
+\end_layout
+
+\begin_layout Plain Layout
+
+legend(["windowing function","sin($2^{0.5}$t)","Product of both"]) 
+\end_layout
+
+\begin_layout Plain Layout
+
+show()
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Figure_1.png
+	scale 90
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+From the Plot above the function We can see the function sin
+\begin_inset Formula $(\sqrt{2}t)$
+\end_inset
+
+ from -4
+\begin_inset Formula $\pi$
+\end_inset
+
+ to 4
+\begin_inset Formula $\pi$
+\end_inset
+
+ .
+ The value at the endpoint is not same and therefore we will multipy it
+ with the windowing function (in blue).
+ Green is the product of both.
+ The frequency does not affect the DFT of sine because in frequency domain
+ Windowing function is a broad bell shape and it does not affect the frequency
+ spetrum unless the signal frequency are high enough to interfere with the
+ falling lobe of windowing function.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+y = y * wnd y[0] = 0 
+\end_layout
+
+\begin_layout Plain Layout
+
+y = fftshift(y) 
+\end_layout
+
+\begin_layout Plain Layout
+
+Y = fftshift(fft(y))/256.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+w = linspace(-pi*fmax,pi*fmax,257) 
+\end_layout
+
+\begin_layout Plain Layout
+
+w=w[:-1] 
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(w,wnd)
+\end_layout
+
+\begin_layout Plain Layout
+
+show() #plotting results 
+\end_layout
+
+\begin_layout Plain Layout
+
+figure()
+\end_layout
+
+\begin_layout Plain Layout
+
+subplot(2,1,1)
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(w,abs(Y),'b',w,abs(Y),'bo',lw=2) 
+\end_layout
+
+\begin_layout Plain Layout
+
+xlim([-4,4])
+\end_layout
+
+\begin_layout Plain Layout
+
+ylabel(r"$|Y|$",size=16)
+\end_layout
+
+\begin_layout Plain Layout
+
+title(r"Spectrum of $
+\backslash
+sin
+\backslash
+left(
+\backslash
+sqrt{2}t
+\backslash
+right)
+\backslash
+times w(t)$")
+\end_layout
+
+\begin_layout Plain Layout
+
+grid(True)
+\end_layout
+
+\begin_layout Plain Layout
+
+subplot(2,1,2)
+\end_layout
+
+\begin_layout Plain Layout
+
+ii=where(abs(Y)>1e-3)
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(w[ii],angle(Y[ii]),'ro',lw=2)
+\end_layout
+
+\begin_layout Plain Layout
+
+xlim([-4,4])
+\end_layout
+
+\begin_layout Plain Layout
+
+ylabel(r"Phase of $Y$",size=16) 
+\end_layout
+
+\begin_layout Plain Layout
+
+xlabel(r"$
+\backslash
+omega$",size=16)
+\end_layout
+
+\begin_layout Plain Layout
+
+grid(True) 
+\end_layout
+
+\begin_layout Plain Layout
+
+show()
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+\begin_inset Graphics
+	filename Figure_2.png
+	scale 90
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+As expected since DTFT of sin(
+\begin_inset Formula $\sqrt{2}t$
+\end_inset
+
+) has two peaks at 
+\begin_inset Formula $\pm\sqrt{2}$
+\end_inset
+
+ similarly the peaks observed in the graph are close to the value.
+ Phase corresponding to the maximum peak should be 
+\begin_inset Formula $\mp$
+\end_inset
+
+
+\begin_inset Formula $\frac{\pi}{2}$
+\end_inset
+
+ for respective peaks which is consistent with obtained output.
+ The peak is less sharp because of the effect cause by the windowing function.
+\end_layout
+
+\begin_layout Section
+Problem 2
+\end_layout
+
+\begin_layout Paragraph*
+In this Problem we need to obtain DFT of 
+\begin_inset Formula $\cos^{3}(0.86t)$
+\end_inset
+
+ .
+ DTFT of cos
+\begin_inset Formula $^{3}$
+\end_inset
+
+(
+\begin_inset Formula $\omega_{o}t$
+\end_inset
+
+) is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+X(\exp^{j\omega})=\frac{3\pi}{4}(\delta(\omega-\omega_{o})+\delta(\omega+\omega_{o}))+\frac{\pi}{4}(\delta(\omega-3\omega_{o})+\delta(\omega+3\omega_{o}))
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Evaluating DFT of this function without windowing gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#Without Windowing
+\end_layout
+
+\begin_layout Plain Layout
+
+t=linspace(-4*pi,4*pi,257)
+\end_layout
+
+\begin_layout Plain Layout
+
+t=t[:-1] 
+\end_layout
+
+\begin_layout Plain Layout
+
+dt=t[1]-t[0]
+\end_layout
+
+\begin_layout Plain Layout
+
+fmax=1/dt
+\end_layout
+
+\begin_layout Plain Layout
+
+n=arange(256)
+\end_layout
+
+\begin_layout Plain Layout
+
+y=cos(0.86*t)**3 
+\end_layout
+
+\begin_layout Plain Layout
+
+y[0]=0 
+\end_layout
+
+\begin_layout Plain Layout
+
+y=fftshift(y) 
+\end_layout
+
+\begin_layout Plain Layout
+
+Y=fftshift(fft(y))/256.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+w=linspace(-pi*fmax,pi*fmax,257)
+\end_layout
+
+\begin_layout Plain Layout
+
+w=w[:-1]
+\end_layout
+
+\begin_layout Plain Layout
+
+figure() 
+\end_layout
+
+\begin_layout Plain Layout
+
+subplot(2,1,1) 
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(w,abs(Y),'b',w,abs(Y),'bo',lw=2) 
+\end_layout
+
+\begin_layout Plain Layout
+
+xlim([-4,4]) 
+\end_layout
+
+\begin_layout Plain Layout
+
+ylabel(r"$|Y|$",size=16) 
+\end_layout
+
+\begin_layout Plain Layout
+
+title(r"Spectrum of cos$^{3}(
+\backslash
+omega_{o}t)$") 
+\end_layout
+
+\begin_layout Plain Layout
+
+grid(True) subplot(2,1,2) 
+\end_layout
+
+\begin_layout Plain Layout
+
+ii=where(abs(Y)>1e-3) 
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(w[ii],angle(Y[ii]),'ro',lw=2) 
+\end_layout
+
+\begin_layout Plain Layout
+
+xlim([-4,4]) 
+\end_layout
+
+\begin_layout Plain Layout
+
+ylabel(r"Phase of $Y$",size=16)
+\end_layout
+
+\begin_layout Plain Layout
+
+xlabel(r"$
+\backslash
+omega$",size=16)
+\end_layout
+
+\begin_layout Plain Layout
+
+grid(True) 
+\end_layout
+
+\begin_layout Plain Layout
+
+show()
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Figure_3.png
+	scale 90
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Now computing its DFT with windowing function
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+t=linspace(-4*pi,4*pi,513)
+\end_layout
+
+\begin_layout Plain Layout
+
+t=t[:-1]
+\end_layout
+
+\begin_layout Plain Layout
+
+dt=t[1]-t[0]
+\end_layout
+
+\begin_layout Plain Layout
+
+fmax=1/dt
+\end_layout
+
+\begin_layout Plain Layout
+
+n=arange(512)
+\end_layout
+
+\begin_layout Plain Layout
+
+wnd=fftshift(0.54+0.46*cos(2*pi*n/512))
+\end_layout
+
+\begin_layout Plain Layout
+
+y=cos(0.86*t)**3 
+\end_layout
+
+\begin_layout Plain Layout
+
+y=y*wnd
+\end_layout
+
+\begin_layout Plain Layout
+
+y[0]=0 
+\end_layout
+
+\begin_layout Plain Layout
+
+y=fftshift(y)
+\end_layout
+
+\begin_layout Plain Layout
+
+Y=fftshift(fft(y))/512.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+w=linspace(-pi*fmax,pi*fmax,513)
+\end_layout
+
+\begin_layout Plain Layout
+
+w=w[:-1] 
+\end_layout
+
+\begin_layout Plain Layout
+
+figure() 
+\end_layout
+
+\begin_layout Plain Layout
+
+subplot(2,1,1) 
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(w,abs(Y),'b',w,abs(Y),'bo',lw=2) 
+\end_layout
+
+\begin_layout Plain Layout
+
+xlim([-4,4])
+\end_layout
+
+\begin_layout Plain Layout
+
+ylabel(r"$|Y|$",size=16) 
+\end_layout
+
+\begin_layout Plain Layout
+
+title(r"Spectrum of cos$^{3}(
+\backslash
+omega_{o}t)$") 
+\end_layout
+
+\begin_layout Plain Layout
+
+grid(True) 
+\end_layout
+
+\begin_layout Plain Layout
+
+subplot(2,1,2) 
+\end_layout
+
+\begin_layout Plain Layout
+
+ii=where(abs(Y)>1e-3) 
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(w[ii],angle(Y[ii]),'ro',lw=2)
+\end_layout
+
+\begin_layout Plain Layout
+
+xlim([-4,4])
+\end_layout
+
+\begin_layout Plain Layout
+
+ylabel(r"Phase of $Y$",size=16) 
+\end_layout
+
+\begin_layout Plain Layout
+
+xlabel(r"$
+\backslash
+omega$",size=16) 
+\end_layout
+
+\begin_layout Plain Layout
+
+grid(True)
+\end_layout
+
+\begin_layout Plain Layout
+
+show()
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Figure_4.png
+	scale 90
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+OBSERVATIONS
+\end_layout
+
+\begin_layout Paragraph
+In both case three distinguished peaks are visible at the expected position
+ phase corresponding to the peaks is phase is 0 .
+ Which is correct for cosines.
+ In second is a more correct approximation without windowing function it
+ slowly falls to 0, and has broader peaks.
+ Sharper peaks are observed by using windowing function.
+ 
+\end_layout
+
+\begin_layout Section
+Problem 3 and 4
+\end_layout
+
+\begin_layout Subsection
+Problem 3
+\end_layout
+
+\begin_layout Paragraph
+In this problem we are selecting a function cos(
+\begin_inset Formula $\omega t$
+\end_inset
+
++
+\begin_inset Formula $\delta$
+\end_inset
+
+) where 
+\begin_inset Formula $\omega$
+\end_inset
+
+ ranges from 0.5 and 1.5 and 
+\begin_inset Formula $\delta$
+\end_inset
+
+ varies from 0 to 
+\begin_inset Formula $\pi$
+\end_inset
+
+ .
+ Considering them unformly distributed random numbers ,we can select a function
+ and then estimate value of 
+\begin_inset Formula $\omega$
+\end_inset
+
+ and 
+\begin_inset Formula $\delta.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+We know the DFT of cosine by plotting its DFT the value of 
+\begin_inset Formula $\omega$
+\end_inset
+
+ corresponding to its peak will be the frequency of cosine and the phase
+ corresponding to this 
+\begin_inset Formula $\omega$
+\end_inset
+
+ value obtained is 
+\begin_inset Formula $\delta.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+omega = np.random.uniform(0.5,1.5)#random
+\end_layout
+
+\begin_layout Plain Layout
+
+delta = np.random.uniform(-1,1)*pi #random 
+\end_layout
+
+\begin_layout Plain Layout
+
+print omega 
+\end_layout
+
+\begin_layout Plain Layout
+
+print delta 
+\end_layout
+
+\begin_layout Plain Layout
+
+t = linspace(-pi,pi,257) 
+\end_layout
+
+\begin_layout Plain Layout
+
+dt = t[1] - t[0] 
+\end_layout
+
+\begin_layout Plain Layout
+
+fmax = 1/dt 
+\end_layout
+
+\begin_layout Plain Layout
+
+t = t[:-1] 
+\end_layout
+
+\begin_layout Plain Layout
+
+n=arange(256) 
+\end_layout
+
+\begin_layout Plain Layout
+
+wnd= fftshift(0.54+0.46*cos(2*pi*n/256)) 
+\end_layout
+
+\begin_layout Plain Layout
+
+y = cos( omega * t + delta ) 
+\end_layout
+
+\begin_layout Plain Layout
+
+y[0] = 0 
+\end_layout
+
+\begin_layout Plain Layout
+
+y = fftshift(y)
+\end_layout
+
+\begin_layout Plain Layout
+
+Y = fftshift(fft(y))/512.0
+\end_layout
+
+\begin_layout Plain Layout
+
+w=linspace(-pi*fmax,pi*fmax,257)
+\end_layout
+
+\begin_layout Plain Layout
+
+w=w[:-1]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Figure_5.png
+	scale 90
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+The output obtained is as expected.
+ Now from this plot we can extract the values of 
+\begin_inset Formula $\omega$
+\end_inset
+
+ and 
+\begin_inset Formula $\delta$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+figure()
+\end_layout
+
+\begin_layout Plain Layout
+
+subplot(2,1,1)
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(w,abs(Y),'b',w,abs(Y),'bo',lw=2)
+\end_layout
+
+\begin_layout Plain Layout
+
+xlim([-4,4])
+\end_layout
+
+\begin_layout Plain Layout
+
+ylabel(r"$|Y|$",size=16) 
+\end_layout
+
+\begin_layout Plain Layout
+
+title(r"Spectrum of cos$(
+\backslash
+omega_{o}t + 
+\backslash
+delta)$") 
+\end_layout
+
+\begin_layout Plain Layout
+
+grid(True) 
+\end_layout
+
+\begin_layout Plain Layout
+
+subplot(2,1,2)
+\end_layout
+
+\begin_layout Plain Layout
+
+ii=where(abs(Y)>1e-3)
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(w[ii],angle(Y[ii]),'ro',lw=2) 
+\end_layout
+
+\begin_layout Plain Layout
+
+xlim([-4,4])
+\end_layout
+
+\begin_layout Plain Layout
+
+ylabel(r"Phase of $Y$",size=16)
+\end_layout
+
+\begin_layout Plain Layout
+
+xlabel(r"$
+\backslash
+omega$",size=16) 
+\end_layout
+
+\begin_layout Plain Layout
+
+grid(True) 
+\end_layout
+
+\begin_layout Plain Layout
+
+show()	
+\end_layout
+
+\begin_layout Plain Layout
+
+maximum = max(abs(Y))
+\end_layout
+
+\begin_layout Plain Layout
+
+jj = where(abs(Y) == maximum)
+\end_layout
+
+\begin_layout Plain Layout
+
+print "omega estimation",w[jj] 
+\end_layout
+
+\begin_layout Plain Layout
+
+print "delta estimation",angle(Y[jj])
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Output
+\end_layout
+
+\begin_layout LyX-Code
+omeaga 0.976881673062 
+\end_layout
+
+\begin_layout LyX-Code
+delta -0.270480948569
+\end_layout
+
+\begin_layout LyX-Code
+omega estimation [-1.
+ 1.]
+\end_layout
+
+\begin_layout LyX-Code
+delta estimation [ 0.27857661 -0.27857661] 
+\end_layout
+
+\begin_layout Subsubsection
+Observations
+\end_layout
+
+\begin_layout Paragraph
+The output of the program returns both the peaks.
+ Value of the omega closely resembles the actual value used and other output
+ is the phase corresponding to both the peaks.
+ Estimated delta value also closely resembles to the actual value of the
+ 
+\begin_inset Formula $\delta$
+\end_inset
+
+ used.
+\end_layout
+
+\begin_layout Subsection
+Problem 4
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Figure_6.png
+	scale 90
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+The above Plot is obtained after adding noise to the input.
+ Plot closely resembles with the acctual plot obtained without noice.
+ Using the same value of omega and delta (Randomly Generated) , However
+ there estimate is now more erroneous still very close to the actual value.
+\end_layout
+
+\begin_layout Subsubsection
+Output
+\end_layout
+
+\begin_layout LyX-Code
+omeaga 0.976881673062 
+\end_layout
+
+\begin_layout LyX-Code
+delta -0.270480948569
+\end_layout
+
+\begin_layout LyX-Code
+omega estimation [-1.
+  1.] 
+\end_layout
+
+\begin_layout LyX-Code
+delta estimation [ 0.29102405 -0.29102405]
+\end_layout
+
+\begin_layout Section
+Problem 5
+\end_layout
+
+\begin_layout Paragraph
+The given input signal is 
+\begin_inset Formula 
+\[
+cos(16(1.5+\frac{t}{2\pi})t)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+This is a called Chirped signal as its frequency varies with time.
+ Time domain plot of this function is shown
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Figure_10.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Its DFT for time going from -
+\begin_inset Formula $\pi$
+\end_inset
+
+ to 
+\begin_inset Formula $\pi$
+\end_inset
+
+ is 1024 steps is evaluated.
+ Its frequecy specOtrum thus obtained is
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Figure_7.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Observation
+\end_layout
+
+\begin_layout Paragraph
+In the duration 
+\begin_inset Formula $-\pi$
+\end_inset
+
+ to 
+\begin_inset Formula $\pi$
+\end_inset
+
+ the chirping sgnal frequency changes from 16 to 32 .
+ It can be seen from the spectrum first peak occur at 
+\begin_inset Formula $\pm16$
+\end_inset
+
+ and ends at 
+\begin_inset Formula $\pm32$
+\end_inset
+
+ .
+ 
+\end_layout
+
+\begin_layout Section
+Problem 6
+\end_layout
+
+\begin_layout Paragraph
+Using the same chirping signal as in last problem.
+ The chirping signal
+\end_layout
+
+\begin_layout Paragraph
+\begin_inset Formula 
+\[
+cos(16(1.5+\frac{t}{2\pi})t)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+This signal has time dependent frequency term hence to know its exact spectrum
+ DFT of this needs to be plotted aginst time .
+ This is called Dynamic Spectrum.
+ To do so we will break block of 1024 element going from -
+\begin_inset Formula $\pi$
+\end_inset
+
+ to 
+\begin_inset Formula $\pi$
+\end_inset
+
+ into 64 of 62 elements each and then take transform.
+\end_layout
+
+\begin_layout Subsection
+Contour Plot
+\end_layout
+
+\begin_layout Paragraph
+Contour Plot clearly shows diverging lis in time as the time progresses
+ .
+ As expected.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+t = linspace(-pi,pi,1025) 
+\end_layout
+
+\begin_layout Plain Layout
+
+dt = t[1] - t[0] 
+\end_layout
+
+\begin_layout Plain Layout
+
+fmax = 1/dt 
+\end_layout
+
+\begin_layout Plain Layout
+
+t = t[:-1]
+\end_layout
+
+\begin_layout Plain Layout
+
+y = cos( 16*(1.5 + t/(2*pi))*t )
+\end_layout
+
+\begin_layout Plain Layout
+
+y = reshape(y,(-1,16))
+\end_layout
+
+\begin_layout Plain Layout
+
+y[:,0] = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+y = fftshift(y)
+\end_layout
+
+\begin_layout Plain Layout
+
+Y = fftshift(fft(y))/16.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+w=linspace(-pi*fmax,pi*fmax,17)
+\end_layout
+
+\begin_layout Plain Layout
+
+w=w[:-1] 
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.contour(w,t[::16],abs(Y)) plt.show()
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Figure_8.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Surface Plot
+\end_layout
+
+\begin_layout Paragraph
+Surface plot of the spectrum shows Two peaks saperating apart in time .
+ As expected.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+W,T = np.meshgrid(t[::16],w) 
+\end_layout
+
+\begin_layout Plain Layout
+
+fig1 = plt.figure(1) 
+\end_layout
+
+\begin_layout Plain Layout
+
+ax = p3.Axes3D(fig1) 
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.title('The 3-D surface plot') 
+\end_layout
+
+\begin_layout Plain Layout
+
+surf = ax.plot_surface(T,W,abs(Y.T),rstride = 1,cstride = 1, cmap = plt.cm.jet)
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.show()
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Figure_9.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

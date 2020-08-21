@@ -1,0 +1,24 @@
+{
+    "python.linting.enabled": false,
+    "files.associations": {
+        "iostream": "cpp",
+        "limits": "cpp",
+        "chrono": "cpp",
+        "valarray": "cpp",
+        "ostream": "cpp",
+        "array": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp",
+        "bitset": "cpp",
+        "*.tcc": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "forward_list": "cpp",
+        "ratio": "c",
+        "system_error": "c",
+        "type_traits": "c"
+    }
+}
